@@ -49,7 +49,7 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="{% url 'index' %}" class="active">Home</a></li>
             
             <li><a href="#services">Servicios</a></li>
             <li><a href="#departments">Departamentos</a></li>
@@ -76,7 +76,27 @@
             <li><a href="#contact">Contacto</a></li>
             <li><a href="#acerca">Acerca de</a></li>
             {% if user.is_authenticated %}
-          <li class="nav-item">
+            <li class="dropdown"><a href="#"><span>{{request.user.username}}</span> <img class="img-profile rounded-circle ms-2"
+              src="{{request.user.get_imagen}}" width="40px" height="40px"></a>
+              <ul>
+                <li><a href="#">Perfil</a></li>
+                <li><a href="#">Cambiar Contraseña</a></li>
+                <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                  Cerrar Sesión
+              </a></li>
+             
+              </ul>
+
+              {% else %}
+                  <a class="nav-link" href="{% url 'login' %}" role="button">
+                    
+                    <span class="mr-2 d-none d-lg-inline">Iniciar sesión</span>
+               
+                
+                    </a>
+            </li>
+                 
+          {% comment %} <li class="nav-item">
             <a class="nav-link" href="#">Administración</a>
           </li>
           <li class="nav-item dropdown">
@@ -89,22 +109,19 @@
                 
                 <ul class="dropdown-menu shadow dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                       
                         Perfil
                     </a> 
                     <a class="dropdown-item" href="#">
-                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                        
                         Cambiar contraseña
                     </a>
                     
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                        Cerrar Sesión
-                    </a>
-                    {% comment %} <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                       
-                    </a> {% endcomment %}
+                      Cerrar Sesión
+                  </a>
+                  
                   </ul>
           
                   {% else %}
@@ -114,8 +131,9 @@
                
                 
                     </a>
-               
+                  </li> {% endcomment %}
           {% endif %}
+                
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -129,11 +147,29 @@
   </header>
 
 
+
 <!-- CONTENIDO PRINCIPAL -->
 <main class="container my-5">
   {% block content %}{% endblock %}
 </main>
  
+<div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         
+              </button>
+          </div>
+          <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesión</a>
+          </div>
+      </div>
+  </div>
+</div>
 
   <footer id="footer" class="footer light-background">
 
