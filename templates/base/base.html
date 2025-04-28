@@ -54,30 +54,12 @@
             <li><a href="#services">Servicios</a></li>
             <li><a href="#departments">Departamentos</a></li>
             <li><a href="#doctors">Profecionales</a></li>
-            {% comment %} <ul>
-            <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li>
-             {% endcomment %}
+          
             <li><a href="#contact">Contacto</a></li>
             <li><a href="#acerca">Acerca de</a></li>
             {% if user.is_authenticated %}
-            <li class="dropdown"><a href="#"><span>{{request.user.username}}</span> <img class="img-profile rounded-circle ms-2"
-              src="{{request.user.get_imagen}}" width="40px" height="40px"></a>
+            <li class=" dropdown"><a href="#"><span>{{request.user.username}}</span> <img class="img-profile rounded-circle ms-2"
+              src="{{request.user.get_imagen}}" width="40px" height="40px"> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Perfil</a></li>
                 <li><a href="#">Cambiar Contraseña</a></li>
@@ -87,51 +69,16 @@
              
               </ul>
 
-              {% else %}
-                  <a class="nav-link" href="{% url 'login' %}" role="button">
-                    
-                    <span class="mr-2 d-none d-lg-inline">Iniciar sesión</span>
-               
-                
-                    </a>
+              
             </li>
-                 
-          {% comment %} <li class="nav-item">
-            <a class="nav-link" href="#">Administración</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    
-                    <span class="mr-2 d-none d-lg-inline">{{request.user.username}}</span>
-                    <img class="img-profile rounded-circle"
-                        src="{{request.user.get_imagen}}">
-                </a>
-                
-                <ul class="dropdown-menu shadow dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">
-                       
-                        Perfil
-                    </a> 
-                    <a class="dropdown-item" href="#">
-                        
-                        Cambiar contraseña
-                    </a>
-                    
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                      Cerrar Sesión
-                  </a>
-                  
-                  </ul>
+            {% else %}
+            <li>
+            <a href="{% url 'login' %}" role="button">
+              
+              Iniciar sesión
           
-                  {% else %}
-                  <a class="nav-link" href="{% url 'login' %}" role="button">
-                    
-                    <span class="mr-2 d-none d-lg-inline">Iniciar sesión</span>
-               
-                
-                    </a>
-                  </li> {% endcomment %}
+              </a>
+            </li>
           {% endif %}
                 
           </ul>
@@ -149,9 +96,9 @@
 
 
 <!-- CONTENIDO PRINCIPAL -->
-<main class="container my-5">
+
   {% block content %}{% endblock %}
-</main>
+
  
 <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

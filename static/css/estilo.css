@@ -208,3 +208,6 @@
   .form-input:not(:placeholder-shown):invalid ~ .input-icon {
     color: #ef4444;
   }
+
+
+ 

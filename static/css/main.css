@@ -1965,6 +1965,21 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
-}
+.gradient-custom-2 {
+  /* fallback for old browsers */
+  background: #1663f3;
+  
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, #ACD0F2, #94B5F2, #4744EE, #156BED);
+  
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(
+    to right,
+    #90c3e9,  /* azul claro más oscuro */
+    #58a8f8,  /* azul suave */
+    #0984e3,  /* azul fuerte */
+    #0652dd   /* azul profundo */
+  );
+  
+  
+  }
