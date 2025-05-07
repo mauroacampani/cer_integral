@@ -11,4 +11,4 @@ class Users(AbstractUser):
     def get_imagen(self):
         if self.imagen:
             return '{}{}'.format(MEDIA_URL, self.imagen)
-        return '{}{}'.format(STATIC_URL, 'app/img/usuarios/iconoper.jpg')
+        return '{}{}'.format(MEDIA_URL, '/usuarios/mauro.jpg')
