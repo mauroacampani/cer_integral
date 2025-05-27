@@ -1,6 +1,6 @@
 {% extends 'administracion/base_administracion.html' %} 
 {% load static %}
-{%block title %}Registrar especialidad{% endblock %} 
+{%block title %}Registrar Ocupación{% endblock %} 
 
 {% block contenido %}
 
@@ -31,14 +31,14 @@
                 {% endfor %} 
                 {% endif %}
                 <p class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                  Registrar Especialidad
+                  Registrar Ocupación
                 </p>
 
                 <form action="" method="post" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="form-outline flex-fill mb-3">
                     <label class="form-label" for="form3Example3">Nombre</label>
-                    <i class="fa-solid fa-dog"></i> <i class="fa-solid fa-cat"></i>
+                    <i class="fa-solid fa-user-tie"></i>
                     <div class="form-outline flex-fill mb-0">
     
                       <input type="text" id="{{form.nombre.auto_id }}" name="{{form.nombre.name}}" value="{{ form.nombre.value | default:'' }}" class="form-control form-control-sm" />
