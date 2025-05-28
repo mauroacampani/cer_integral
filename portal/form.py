@@ -1,21 +1,32 @@
 from django import forms
 from portal.models import Users
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
+from django.core.exceptions import ValidationError
 
-class UserRegisterForm(UserCreationForm):
-    
+class UserRegisterForm(forms.ModelForm):
+    confirm_email = forms.EmailField(label="Confirmar Email")
+
     class Meta:
         model = Users
-        fields = ['username', 'password1', 'password2', 'email']
-    
+        fields = ['username', 'email', 'first_name', 'last_name']
+
     def clean_email(self):
-        email1 = self.cleaned_data['email']
-    
-        email_usuario = Users.objects.filter(email=email1)
+        email = self.cleaned_data.get('email')
+        if Users.objects.filter(email=email).exists():
+            raise ValidationError("Este correo ya está registrado.")
+        return email
+
+    def clean(self):
         
-        if email_usuario:
-            raise forms.ValidationError("El email existe")
-        return email1
+        cleaned_data = super().clean()
+       
+        email = cleaned_data.get("email")
+        confirm_email = cleaned_data.get("confirm_email")
+        print(confirm_email)
+        if email and confirm_email and email != confirm_email:
+            raise ValidationError("Los correos electrónicos no coinciden.")
+
+        return cleaned_data
     
 
 

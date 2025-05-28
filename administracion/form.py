@@ -5,8 +5,9 @@ class ProfesionalForm(forms.ModelForm):
     class Meta:
         model = Profesional
         fields = '__all__'
+        exclude = ('user',)
 
-
+        
 class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidad

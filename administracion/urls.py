@@ -14,4 +14,7 @@ urlpatterns = [
     path('registroOcupacion/', views.RegistroOcupacionView.as_view(), name='registroOcupacion'),
     path('editarOcupacion/<int:pk>', views.ActualizarOcupacionView.as_view(), name='editarOcupacion'),
     path('eliminarOcupacion/<int:pk>/', views.EliminarOcupacionView.as_view(), name='eliminarOcupacion'),
+
+    path('listadoProfesional/', views.ListProfesional.as_view(), name='listadoProfesional'),
+    path('crearProfesional/', views.CrearProfesionalView.as_view(), name='crearProfesional'),
 ]

@@ -39,8 +39,8 @@ class Especialidad(models.Model):
 
 class Profesional(models.Model):
     user = models.OneToOneField(Users, on_delete=models.CASCADE)
-    ocupacion = models.ForeignKey(Ocupacion, on_delete=models.PROTECT)
-    especialidad = models.ForeignKey(Especialidad, on_delete=models.PROTECT)
+    ocupacion = models.ForeignKey(Ocupacion, on_delete=models.SET_NULL, null=True)
+    especialidad = models.ForeignKey(Especialidad, on_delete=models.SET_NULL, null=True)
     direccion = models.CharField(max_length=255, blank=True)
     telefono = models.CharField(max_length=20, blank=True)
     dni = models.CharField(max_length=20, unique=True)

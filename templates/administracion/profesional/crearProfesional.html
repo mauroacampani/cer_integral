@@ -1,0 +1,226 @@
+{% extends 'administracion/base_administracion.html' %} 
+{% load static %}
+{%block title %}Registrar Profesional{% endblock %} 
+
+{% block contenido %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-start">
+      <div class="card text-black w-100" style="border-radius: 25px">
+        <div class="card-body">
+         
+            <!-- Imagen -->
+            <div class="row">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                  {{ message }}
+                </div>
+                {% endfor %} 
+                {% if user_form.non_field_errors %} 
+                {% for error in user_form.non_field_errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %} 
+                {% endif %}
+
+                {% if profesional_form.non_field_errors %} 
+                {% for error in profesional_form.non_field_errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %} 
+                {% endif %}
+                <p class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                  Registrar Profesional
+                </p>
+            </div>
+             <div class="row ">
+            <!-- Formulario -->
+            <div class="col-md-12 col-lg-6 col-xl-6  p-4">
+          
+              
+                <form action="" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                 <div class="  mb-4">
+                      
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Nombre de usuario</label>
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{user_form.username.auto_id }}" name="{{user_form.username.name}}" value="{{ user_form.username.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{user_form.username.errors}}</div>
+
+                  <div class="  mb-4">
+                   
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Email</label>
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <input type="email" id="{{user_form.email.auto_id }}" onpaste="return false;" oncopy="return false;" oncut="return false;" name="{{user_form.email.name}}"  value="{{ user_form.email.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{user_form.email.errors}}</div>
+
+                  <div class="  mb-4">
+                  <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Confirmar Email</label>
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <input type="email" id="{{user_form.confirm_email.auto_id }}" onpaste="return false;" oncopy="return false;" oncut="return false;" name="{{user_form.confirm_email.name}}"  value="{{ user_form.confirm_email.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                 
+                  <div class="error text-danger">{{user_form.confirm_email.errors}}</div>
+                </div>
+                  <!-- <div class="  mb-4">
+                   
+                    
+                      
+                      <div class="form-outline  mb-0">
+                        <label class="form-label" for="form3Example3">Contraseña</label>
+                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                        <input type="password" id="{{ user_form.password1.auto_id }}" name="{{ user_form.password1.name }}" value="{{ user_form.password1.value | default:'' }}" class="form-control form-control-sm" />
+                        
+                      </div>
+                    </div>
+                    <div class="error text-danger">{{user_form.password1.errors}}</div>
+  
+                    <div class=" mb-4">
+                     
+                      <div class="form-outline mb-0">
+                        
+                        <label class="form-label" for="form3Example3">Repetir contraseña</label>
+                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                        <input type="password" id="{{ user_form.password2.auto_id }}" name="{{ user_form.password2.name }}" value="{{ user_form.password2.value | default:'' }}" class="form-control form-control-sm" />
+                       
+                      </div>
+                    </div>
+  
+                    <div class="error text-danger">{{user_form.password2.errors}}</div> -->
+
+                  <div class="  mb-4">
+                   
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Nombre</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{user_form.first_name.auto_id }}" name="{{user_form.first_name.name}}"  value="{{ user_form.first_name.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{user_form.first_name.errors}}</div>
+
+                  <div class="mb-4">
+                  <div class="form-outline mb-0">
+                      <label class="form-label" for="form3Example3">Apellido</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{user_form.last_name.auto_id }}" name="{{user_form.last_name.name}}"  value="{{ user_form.last_name.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{user_form.last_name.errors}}</div>
+
+                <div class="  mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">DNI</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{profesional_form.dni.auto_id }}" required name="{{profesional_form.dni.name}}"  value="{{ profesional_form.dni.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{profesional_form.dni.errors}}</div>
+            
+          </div>
+            <div class="col-md-12 col-lg-6 col-xl-6  p-4">
+               <div class="mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Dirección</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{profesional_form.direccion.auto_id }}" name="{{profesional_form.direccion.name}}"  value="{{ profesional_form.direccion.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                </div>  
+                  <div class="error text-danger">{{profesional_form.direccion.errors}}</div>
+
+                  <div class="  mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Telefono</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{profesional_form.telefono.auto_id }}" name="{{profesional_form.telefono.name}}"  value="{{ profesional_form.telefono.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{profesional_form.telefono.errors}}</div>
+
+                  <div class="  mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">DNI</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{profesional_form.dni.auto_id }}" required name="{{profesional_form.dni.name}}"  value="{{ profesional_form.dni.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{profesional_form.dni.errors}}</div>
+
+                  <div class="  mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Matricula</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{profesional_form.matricula_profesional.auto_id }}" name="{{profesional_form.matricula_profesional.name}}"  value="{{ profesional_form.matricula_profesional.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{profesional_form.matricula_profesional.errors}}</div>
+
+                  <div class="mb-4">
+                    <div class="form-outline mb-0">
+                        <label class="form-label" for="{{ profesional_form.ocupacion.auto_id }}">Ocupación</label>
+                        <i class="fas fa-briefcase fa-lg me-3 fa-fw"></i>
+                        <select id="{{ profesional_form.ocupacion.auto_id }}" name="{{ profesional_form.ocupacion.name }}" class="form-control form-control-sm">
+                            {% for option in profesional_form.ocupacion.field.queryset %}
+                                <option value="{{ option.pk }}" {% if option.pk|stringformat:"s" == profesional_form.ocupacion.value|stringformat:"s" %}selected{% endif %}>
+                                {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+                    <div class="error text-danger">{{ profesional_form.ocupacion.errors }}</div>
+
+                    <div class="mb-4">
+                    <div class="form-outline mb-0">
+                        <label class="form-label" for="{{ profesional_form.especialidad.auto_id }}">Especialidad</label>
+                        <i class="fas fa-briefcase fa-lg me-3 fa-fw"></i>
+                        <select id="{{ profesional_form.especialidad.auto_id }}" name="{{ profesional_form.especialidad.name }}" class="form-control form-control-sm">
+                            {% for option in profesional_form.especialidad.field.queryset %}
+                                <option value="{{ option.pk }}" {% if option.pk|stringformat:"s" == profesional_form.especialidad.value|stringformat:"s" %}selected{% endif %}>
+                                {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+                    <div class="error text-danger">{{ profesional_form.especialidad.errors }}</div>
+                    
+                <div class="text-center text-lg-start mt-4 pt-1">
+                    <button type="submit" class="btn btn-primary btn-sm"
+                      style="padding-left: 1.5rem; padding-right: 1.5rem;">Guardar</button>
+                  </div>
+
+                  
+                </div>
+
+                </form> 
+                
+          </div>
+        </div>
+        
+        </div>
+    </div>
+ </div>
+ 
+   
+</section>
+{% endblock %}

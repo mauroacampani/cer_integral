@@ -23,10 +23,20 @@
                     
                       <p class="text-center text-black h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                         <h2>Enlace inválido o expirado</h2>
-                        <p>El enlace para restablecer tu contraseña ya no es válido. Es posible que haya expirado o que ya haya sido utilizado.</p>
-                     
+                <p>
+                  El enlace para establecer tu contraseña no es válido. Esto puede deberse a que:
+                </p>
+              <ul>
+                <li>Ya utilizaste el enlace para establecer la contraseña.</li>
+                <li>El enlace ha expirado.</li>
+                <li>El enlace fue modificado o es incorrecto.</li>
+              </ul>
+                <p>
+                  Si necesitás generar un nuevo enlace para establecer tu contraseña, por favor
+                  <a href="{% url 'resetPasswordEmail' %}">solicitá uno nuevo aquí</a> o contactá al administrador del sistema.
+                </p>
                             
-                  <a href="{% url 'resetPasswordEmail' %}" class="btn btn-primary btn-md">Solicitar nuevo enlace</a>
+                  {% comment %} <a href="{% url 'resetPasswordEmail' %}" class="btn btn-primary btn-md">Solicitar nuevo enlace</a> {% endcomment %}
                 </div>
                 
               </div>
