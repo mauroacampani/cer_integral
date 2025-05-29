@@ -1,0 +1,124 @@
+{% extends 'administracion/base_administracion.html' %}
+{% load static %}
+
+{% block title %}Listado de Usuarios{% endblock %}
+
+
+  {% block contenido %}
+
+  <div class="row mt-4">
+    <div class="col-md-10 offset-md-1 text-center">
+    <div class="">
+     <h4>Listado Usuarios</h4>
+    
+    
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                  {{ message }}
+                </div>
+                {% endfor %} 
+           
+            </div>
+    </div>
+    <div class="col-md-10 offset-md-1">
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+      <div class="card-header py-3">
+          
+      </div>
+      <div class="card-body">
+          <div class="table-responsive ">
+             <table class="table table-bordered table-striped table-sm" id="tablaUsuarios" width="100%" cellspacing="0">
+                  <thead>
+                      <tr>
+                          <th>Nombre usuario</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Email</th>
+                          <th>Estado</th>
+                          <th>Admin</th>
+                          <th>Acciones</th>
+                      </tr>
+                      
+                  </thead>
+                  
+                  <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                    <td>{{usuario.username}}</td>
+                    <td>{{usuario.first_name}}</td>
+                    <td>{{usuario.last_name}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-active" type="checkbox" role="switch" data-user-id="{{ usuario.id }}" {% if usuario.is_active %}checked{% endif %}>
+                                   
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-staff" type="checkbox" role="switch" data-user-id="{{ usuario.id }}" {% if usuario.is_staff %}checked{% endif %}>
+                                   
+                        </div>
+                    </td>
+      
+                   
+                    <td class="text-center">
+                            
+                        <a class="btn btn-sm btn-success ms-1" type="button" href="#" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a>
+                        
+                        <a class="btn btn-sm btn-danger ms-1"  type="button" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                  </tbody>
+              </table>
+              
+
+
+              {{mensaje}}
+          </div>
+      </div>
+  </div>
+  
+</div>
+
+  </div>
+
+   
+  {% endblock %}    
+
+  {% block js %}    
+  <script>
+    $(document).ready(function() {
+    
+    table("tablaUsuarios");
+    });
+</script>
+
+
+<script>
+  const csrftoken = '{{ csrf_token }}';  // si usás csrf_token en el template
+  
+document.querySelectorAll('.toggle-active, .toggle-staff').forEach(input => {
+    input.addEventListener('change', () => {
+         
+      const field = input.classList.contains('toggle-active') ? 'is_active' : 'is_staff';
+      const userId = input.dataset.userId;
+      const value = input.checked;
+       
+      fetch("{% url 'toggle_user_status' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({ user_id: userId, field: field, value: value })
+      }).then(res => {
+        if (!res.ok) alert('Error al actualizar');
+      });
+    });
+  });
+</script>
+
+  {% endblock %}    

@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portal',
     'administracion',
+    'axes',
 ]
 
 MIDDLEWARE = [
+    'axes.middleware.AxesMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -108,6 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -160,3 +166,16 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 PASSWORD_RESET_TIMEOUT = 60* 10
+
+from datetime import timedelta
+
+# Limite de intentos fallidos antes de bloquear
+AXES_FAILURE_LIMIT = 3
+
+
+AXES_COOLOFF_TIME = timedelta(minutes=10)
+
+# Bloqueo por nombre de usuario (sin importar IP)
+AXES_LOCKOUT_PARAMETERS = ["username"]
+
+AXES_LOCKOUT_URL = "/bloqueUsuario/"

@@ -24,11 +24,13 @@
                       style="width: 185px;" alt="logo">
                     
                   </div>
-                  {% for message in messages %}
-                  <div class="alert alert-{{ message.tags }}" role="alert">
-                    {{ message }}
-                  </div>
-                {% endfor %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
                 {% if form.non_field_errors %}
                   {% for error in form.non_field_errors %}
                     <div class="alert alert-danger">

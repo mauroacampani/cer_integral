@@ -104,7 +104,6 @@ class ListProfesional(ListView):
 
 
 
-
 class CrearProfesionalView(View):
     def get(self, request):
         user_form = UserRegisterForm()

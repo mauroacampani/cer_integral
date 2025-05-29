@@ -18,4 +18,10 @@ urlpatterns = [
     path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
 
     path('editarPerfil/', views.editarPerfilUsuario.as_view(), name='editarPerfil'),
+
+    
+    path('listadoUsuarios/', views.ListUsuarios.as_view(), name='listadoUsuarios'),
+    path('usuarios/toggle-status/', views.toggle_user_status, name='toggle_user_status'),
+
+     path('bloqueUsuario/', views.bloqueUsuario, name='bloqueUsuario'),
 ]

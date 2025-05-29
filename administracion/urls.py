@@ -17,4 +17,5 @@ urlpatterns = [
 
     path('listadoProfesional/', views.ListProfesional.as_view(), name='listadoProfesional'),
     path('crearProfesional/', views.CrearProfesionalView.as_view(), name='crearProfesional'),
+
 ]

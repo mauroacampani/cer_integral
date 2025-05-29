@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Users
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import Group
 from .form import UserRegisterForm, FormReset, cambiarPasswordForm, editarPerfilForm
@@ -17,9 +17,14 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import update_session_auth_hash
 from django.views.generic.edit import UpdateView
 
+
 # Create your views here.
 def index(request):
     return render(request, 'portal/index.html')
+
+    
+def bloqueUsuario(request):
+    return render(request, "registration/bloqueUsuario.html")
 
 
 class RegistroUsuarioView(CreateView):
@@ -144,5 +149,36 @@ class editarPerfilUsuario(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
     
+
+class ListUsuarios(ListView):
+    model = User
+    template_name = 'administracion/usuarios/listadoUsuarios.html'  
+    context_object_name = 'usuarios'
     
-            
+    
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import user_passes_test
+from django.http import JsonResponse
+
+# @csrf_exempt
+# @user_passes_test(lambda u: u.is_staff)
+def toggle_user_status(request):
+    
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        field = data.get('field')  # "is_active" o "is_staff"
+        value = data.get('value')  # True o False
+        print(value)
+        try:
+            user = User.objects.get(pk=user_id)
+            if field in ['is_active', 'is_staff']:
+                setattr(user, field, value)
+                user.save()
+                return JsonResponse({'success': True})
+        except User.DoesNotExist:
+            pass
+  
+    return JsonResponse({'success': False}, status=400)
