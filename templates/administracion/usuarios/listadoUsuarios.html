@@ -13,7 +13,7 @@
     
     
                 {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
+                <div class="alert alert-{% if message.tags == "error"  %}danger{% else %} {{message.tags}} {% endif %}" role="alert">
                   {{ message }}
                 </div>
                 {% endfor %} 
@@ -51,17 +51,11 @@
                     <td>{{usuario.email}}</td>
                     <td>
                       {{ usuario.is_active|yesno:"Sí,No" }}
-                        <!-- <div class="form-check form-switch">
-                            <input class="form-check-input toggle-active" type="checkbox" role="switch" data-user-id="{{ usuario.id }}" {% if usuario.is_active %}checked{% endif %}>
-                                   
-                        </div> -->
+                       
                     </td>
                     <td>
                       {{ usuario.is_staff|yesno:"Sí,No" }}
-                        <!-- <div class="form-check form-switch">
-                            <input class="form-check-input toggle-staff" type="checkbox" role="switch" data-user-id="{{ usuario.id }}" {% if usuario.is_staff %}checked{% endif %}>
-                                   
-                        </div> -->
+                     
                     </td>
       
                    
@@ -69,7 +63,7 @@
                             
                      <a class="btn btn-sm btn-success ms-1" type="button" href="{% url 'editarUsuario' usuario.id %}" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a> 
                         
-                        <a class="btn btn-sm btn-danger ms-1"  type="button" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
+                        <a class="btn btn-sm btn-danger ms-1"  type="button" href="{% url 'eliminarUsuario' usuario.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -97,29 +91,5 @@
     table("tablaUsuarios");
     });
 </script>
-
-<!-- <script>
-  const csrftoken = '{{ csrf_token }}';  // si usás csrf_token en el template
-  
-document.querySelectorAll('.toggle-active, .toggle-staff').forEach(input => {
-    input.addEventListener('change', () => {
-         
-      const field = input.classList.contains('toggle-active') ? 'is_active' : 'is_staff';
-      const userId = input.dataset.userId;
-      const value = input.checked;
-       
-      fetch("", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrftoken,
-        },
-        body: JSON.stringify({ user_id: userId, field: field, value: value })
-      }).then(res => {
-        if (!res.ok) alert('Error al actualizar');
-      });
-    });
-  });
-</script> --> 
 
   {% endblock %}    

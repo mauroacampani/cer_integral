@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Users
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import Group
 from .form import UserRegisterForm, FormReset, cambiarPasswordForm, editarPerfilForm, editarUsuarioForm
@@ -17,7 +17,7 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import update_session_auth_hash
 from django.views.generic.edit import UpdateView
 import json
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 
 
 
@@ -145,7 +145,7 @@ class CambiarPasswordView(FormView):
 
 
 #EDITAR PERFIL USUARIOS, CADA USUARIO PODRA EDITAR SU PROPIO PERFIL
-class editarPerfilUsuario(UpdateView):
+class EditarPerfilUsuario(UpdateView):
     model = Users
     template_name = 'registration/perfilUsuario.html'
     form_class = editarPerfilForm
@@ -164,40 +164,33 @@ class ListUsuarios(ListView):
         # Definimos el queryset que se va a mostrar en la lista, con el ordenamiento por 'estado'
         return User.objects.filter(is_superuser=False)
     
-    
-
-# @csrf_exempt
-# @user_passes_test(lambda u: u.is_staff)
-# def toggle_user_status(request):
-    
-#     if request.method == 'POST':
-        
-#         data = json.loads(request.body)
-#         user_id = data.get('user_id')
-#         field = data.get('field')  # "is_active" o "is_staff"
-#         value = data.get('value')  # True o False
-#         print(value)
-#         try:
-#             user = User.objects.get(pk=user_id)
-#             if field in ['is_active', 'is_staff']:
-#                 setattr(user, field, value)
-#                 user.save()
-#                 return JsonResponse({'success': True})
-#         except User.DoesNotExist:
-#             pass
-  
-#     return JsonResponse({'success': False}, status=400)
 
    
-class editarUsuarioView(UpdateView):
+class EditarUsuarioView(UpdateView):
     model = Users
     form_class = editarUsuarioForm
     template_name = 'administracion/usuarios/editarUsuario.html'
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
-        # messages.success(self.request, "Ocupación editada correctamente.")
-        print(form.cleaned_data['is_active'])
+        messages.success(self.request, "Ocupación editada correctamente.")
+        
         return super().form_valid(form)
     
+
+class EliminarUsuarioView(DeleteView):
+    model = Users
+    template_name = 'administracion/usuarios/eliminarUsuario.html'
+    success_url = reverse_lazy('listadoUsuarios')
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.is_superuser:
+            messages.error(request, "No se puede eliminar un superusuario.")
+            return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, "Usuario eliminada correctamente.")
+        return super().delete(request, *args, **kwargs)
     
