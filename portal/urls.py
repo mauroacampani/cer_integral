@@ -21,7 +21,9 @@ urlpatterns = [
 
     
     path('listadoUsuarios/', views.ListUsuarios.as_view(), name='listadoUsuarios'),
-    path('usuarios/toggle-status/', views.toggle_user_status, name='toggle_user_status'),
+    # path('usuarios/toggle-status/', views.toggle_user_status, name='toggle_user_status'),
 
-     path('bloqueUsuario/', views.bloqueUsuario, name='bloqueUsuario'),
+    path('bloqueUsuario/', views.bloqueUsuario, name='bloqueUsuario'),
+
+    path('editarUsuario/<int:pk>/', views.editarUsuarioView.as_view(), name='editarUsuario'),
 ]

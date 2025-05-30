@@ -4,7 +4,7 @@ from .models import Users
 from django.views.generic import CreateView, ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import Group
-from .form import UserRegisterForm, FormReset, cambiarPasswordForm, editarPerfilForm
+from .form import UserRegisterForm, FormReset, cambiarPasswordForm, editarPerfilForm, editarUsuarioForm
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic.edit import FormView
@@ -16,6 +16,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import update_session_auth_hash
 from django.views.generic.edit import UpdateView
+import json
+from django.http import JsonResponse
+
+
+
+User = get_user_model()
 
 
 # Create your views here.
@@ -83,7 +89,6 @@ class ResetPasswordEmailView(FormView):
     
 
 
-User = get_user_model()
 
 
 def validate_token_and_redirect(request, uidb64, token):
@@ -154,31 +159,45 @@ class ListUsuarios(ListView):
     model = User
     template_name = 'administracion/usuarios/listadoUsuarios.html'  
     context_object_name = 'usuarios'
+
+    def get_queryset(self):
+        # Definimos el queryset que se va a mostrar en la lista, con el ordenamiento por 'estado'
+        return User.objects.filter(is_superuser=False)
     
     
-import json
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import user_passes_test
-from django.http import JsonResponse
 
 # @csrf_exempt
 # @user_passes_test(lambda u: u.is_staff)
-def toggle_user_status(request):
+# def toggle_user_status(request):
     
-    if request.method == 'POST':
+#     if request.method == 'POST':
         
-        data = json.loads(request.body)
-        user_id = data.get('user_id')
-        field = data.get('field')  # "is_active" o "is_staff"
-        value = data.get('value')  # True o False
-        print(value)
-        try:
-            user = User.objects.get(pk=user_id)
-            if field in ['is_active', 'is_staff']:
-                setattr(user, field, value)
-                user.save()
-                return JsonResponse({'success': True})
-        except User.DoesNotExist:
-            pass
+#         data = json.loads(request.body)
+#         user_id = data.get('user_id')
+#         field = data.get('field')  # "is_active" o "is_staff"
+#         value = data.get('value')  # True o False
+#         print(value)
+#         try:
+#             user = User.objects.get(pk=user_id)
+#             if field in ['is_active', 'is_staff']:
+#                 setattr(user, field, value)
+#                 user.save()
+#                 return JsonResponse({'success': True})
+#         except User.DoesNotExist:
+#             pass
   
-    return JsonResponse({'success': False}, status=400)
+#     return JsonResponse({'success': False}, status=400)
+
+   
+class editarUsuarioView(UpdateView):
+    model = Users
+    form_class = editarUsuarioForm
+    template_name = 'administracion/usuarios/editarUsuario.html'
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        # messages.success(self.request, "Ocupación editada correctamente.")
+        print(form.cleaned_data['is_active'])
+        return super().form_valid(form)
+    
+    

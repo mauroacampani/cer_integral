@@ -69,3 +69,10 @@ class editarPerfilForm(forms.ModelForm):
         #     'mail': forms.TextInput(attrs={'class': 'form-control form-control-sm' }),
         #     'imagen': forms.FileInput(attrs={'tipe': 'file', 'class': 'form-control-file form-control-sm'  })
         # }
+
+    
+#FORM EDITAR EL PERFIL DE USUARIOS
+class editarUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Users
+        fields = ['id', 'username', 'email', 'last_name', 'first_name', 'is_active', 'is_staff']

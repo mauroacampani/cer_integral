@@ -35,8 +35,8 @@
                           <th>Nombre</th>
                           <th>Apellido</th>
                           <th>Email</th>
-                          <th>Estado</th>
-                          <th>Admin</th>
+                          <th>Activo</th>
+                          <th>Administrador</th>
                           <th>Acciones</th>
                       </tr>
                       
@@ -50,22 +50,24 @@
                     <td>{{usuario.last_name}}</td>
                     <td>{{usuario.email}}</td>
                     <td>
-                        <div class="form-check form-switch">
+                      {{ usuario.is_active|yesno:"Sí,No" }}
+                        <!-- <div class="form-check form-switch">
                             <input class="form-check-input toggle-active" type="checkbox" role="switch" data-user-id="{{ usuario.id }}" {% if usuario.is_active %}checked{% endif %}>
                                    
-                        </div>
+                        </div> -->
                     </td>
                     <td>
-                        <div class="form-check form-switch">
+                      {{ usuario.is_staff|yesno:"Sí,No" }}
+                        <!-- <div class="form-check form-switch">
                             <input class="form-check-input toggle-staff" type="checkbox" role="switch" data-user-id="{{ usuario.id }}" {% if usuario.is_staff %}checked{% endif %}>
                                    
-                        </div>
+                        </div> -->
                     </td>
       
                    
                     <td class="text-center">
                             
-                        <a class="btn btn-sm btn-success ms-1" type="button" href="#" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a>
+                     <a class="btn btn-sm btn-success ms-1" type="button" href="{% url 'editarUsuario' usuario.id %}" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a> 
                         
                         <a class="btn btn-sm btn-danger ms-1"  type="button" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
                     </td>
@@ -96,8 +98,7 @@
     });
 </script>
 
-
-<script>
+<!-- <script>
   const csrftoken = '{{ csrf_token }}';  // si usás csrf_token en el template
   
 document.querySelectorAll('.toggle-active, .toggle-staff').forEach(input => {
@@ -107,7 +108,7 @@ document.querySelectorAll('.toggle-active, .toggle-staff').forEach(input => {
       const userId = input.dataset.userId;
       const value = input.checked;
        
-      fetch("{% url 'toggle_user_status' %}", {
+      fetch("", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,6 +120,6 @@ document.querySelectorAll('.toggle-active, .toggle-staff').forEach(input => {
       });
     });
   });
-</script>
+</script> --> 
 
   {% endblock %}    
