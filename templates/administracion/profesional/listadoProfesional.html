@@ -66,9 +66,9 @@
                     
                     <td class="text-center">
                             
-                        <a class="btn btn-sm btn-success ms-1" type="button" href="#" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a>
+                        <a class="btn btn-sm btn-success ms-1" type="button" href="{% url 'editarProfesional' profesional.id %}" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"><i class="fa-solid fa-pen"></i></a>
                         
-                        <a class="btn btn-sm btn-danger ms-1"  type="button" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
+                        
                     </td>
                 </tr>
                 {% endfor %}

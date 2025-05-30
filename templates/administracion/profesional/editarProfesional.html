@@ -1,0 +1,128 @@
+{% extends 'administracion/base_administracion.html' %} 
+{% load static %}
+{%block title %}Editar Profesional{% endblock %} 
+
+{% block contenido %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-start">
+      <div class="card text-black w-100" style="border-radius: 25px">
+        <div class="card-body" style="height: 100%">
+          <div class="row justify-content-center align-items-center h-100">
+            <!-- Imagen -->
+
+            <!-- Formulario -->
+            <div
+              class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center justify-content-center p-4"
+            >
+          
+              <div class="w-100">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                  {{ message }}
+                </div>
+                {% endfor %} 
+                {% if form.non_field_errors %} 
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %} 
+                {% endif %}
+                <p class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                  Editar Profesional
+                </p>
+
+                <form action="" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  
+                <div class="mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">DNI</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{form.dni.auto_id }}" required name="{{form.dni.name}}"  value="{{ form.dni.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                </div>
+                  <div class="error text-danger">{{form.dni.errors}}</div>
+            
+ 
+           
+               <div class="mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Dirección</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{form.direccion.auto_id }}" name="{{form.direccion.name}}"  value="{{ form.direccion.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                </div>  
+                  <div class="error text-danger">{{form.direccion.errors}}</div>
+
+                  <div class="  mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Telefono</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{form.telefono.auto_id }}" name="{{form.telefono.name}}"  value="{{ form.telefono.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{form.telefono.errors}}</div>
+
+
+                  <div class="  mb-4">
+                    <div class="form-outline  mb-0">
+                      <label class="form-label" for="form3Example3">Matricula</label>
+                      <i class="fas fa-image-portrait fa-lg me-3 fa-fw"></i>
+                      <input type="text" id="{{form.matricula_profesional.auto_id }}" name="{{form.matricula_profesional.name}}"  value="{{ form.matricula_profesional.value | default:'' }}" class="form-control form-control-sm" />
+                     
+                    </div>
+                  </div>
+                  <div class="error text-danger">{{form.matricula_profesional.errors}}</div>
+
+                  <div class="mb-4">
+                    <div class="form-outline mb-0">
+                        <label class="form-label" for="{{ form.ocupacion.auto_id }}">Ocupación</label>
+                        <i class="fas fa-briefcase fa-lg me-3 fa-fw"></i>
+                        <select id="{{ form.ocupacion.auto_id }}" name="{{ form.ocupacion.name }}" class="form-control form-control-sm">
+                            {% for option in form.ocupacion.field.queryset %}
+                                <option value="{{ option.pk }}" {% if option.pk|stringformat:"s" == form.ocupacion.value|stringformat:"s" %}selected{% endif %}>
+                                {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+                    <div class="error text-danger">{{ form.ocupacion.errors }}</div>
+
+                    <div class="mb-4">
+                    <div class="form-outline mb-0">
+                        <label class="form-label" for="{{ form.especialidad.auto_id }}">Especialidad</label>
+                        <i class="fas fa-briefcase fa-lg me-3 fa-fw"></i>
+                        <select id="{{ form.especialidad.auto_id }}" name="{{ form.especialidad.name }}" class="form-control form-control-sm">
+                            {% for option in form.especialidad.field.queryset %}
+                                <option value="{{ option.pk }}" {% if option.pk|stringformat:"s" == form.especialidad.value|stringformat:"s" %}selected{% endif %}>
+                                {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+                    <div class="error text-danger">{{ form.especialidad.errors }}</div>
+
+                  <div class="text-center text-lg-start mt-4 pt-1">
+                    <button type="submit" class="btn btn-primary btn-sm"
+                      style="padding-left: 1.5rem; padding-right: 1.5rem;">Guardar</button>
+                  </div>
+
+                </form> 
+              </div>
+        
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

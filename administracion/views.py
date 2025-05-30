@@ -162,3 +162,15 @@ class CrearProfesionalView(View):
             'user_form': user_form,
             'profesional_form': profesional_form
         })
+    
+
+class EditarProfesionalView(UpdateView):
+    model = Profesional
+    form_class = ProfesionalForm
+    template_name = 'administracion/profesional/editarProfesional.html'
+    success_url = reverse_lazy('listadoProfesional')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Profesional editado correctamente.")
+        
+        return super().form_valid(form)
